@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Stockbit Test</string>
+    <string name="logo_app">Logo App</string>
+    <string name="masuk">Masuk</string>
+    <string name="masuk_dengan_google">Masuk dengan Google</string>
+    <string name="masuk_dengan_facebook">Masuk dengan Facebook</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="lupa_password">Lupa Password</string>
+    <string name="login">Login</string>
+    <string name="masuk_dengan_fingerprint">Masuk dengan Fingerprint</string>
+    <string name="atau">Atau</string>
+    <string name="daftar_sekarang">Daftar sekarang</string>
+    <string name="belum_punya_akun">Belum punya akun?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="stream">Stream</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="chat">Chat</string>
+    <string name="search">Search</string>
+</resources>
