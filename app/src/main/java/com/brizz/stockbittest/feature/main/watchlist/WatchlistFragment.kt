@@ -10,7 +10,9 @@ import com.brizz.stockbittest.R
 import com.brizz.stockbittest.base.BaseFragment
 import com.brizz.stockbittest.data.models.DataItem
 import com.brizz.stockbittest.data.models.ViewState
+import com.brizz.stockbittest.data.repository.impl.WatchlistRepositoryImpl
 import com.brizz.stockbittest.feature.main.watchlist.adapter.WatchlistAdapter
+import com.brizz.stockbittest.feature.main.watchlist.pagination.WatchlistDataSourceFactory
 import com.brizz.stockbittest.utils.injectViewModel
 import kotlinx.android.synthetic.main.fragment_watchlist.*
 
@@ -31,6 +33,7 @@ class WatchlistFragment : BaseFragment<WatchlistViewModel>(), WatchlistContract.
 
         viewModel.apply {
             listDataWatchlist.observe(viewLifecycleOwner, Observer { listData ->
+                swipeRefresh.isRefreshing = false
                 observeFavoriteUsers(listData)
             })
             viewStateLoad.observe(viewLifecycleOwner, Observer {
@@ -40,6 +43,10 @@ class WatchlistFragment : BaseFragment<WatchlistViewModel>(), WatchlistContract.
                     else -> observeError(it.msg)
                 }
             })
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
         }
 
         initRecyclerView()

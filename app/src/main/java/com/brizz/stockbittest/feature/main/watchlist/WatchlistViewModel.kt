@@ -8,10 +8,14 @@ import com.brizz.stockbittest.feature.main.watchlist.pagination.WatchlistDataSou
 import javax.inject.Inject
 
 class WatchlistViewModel@Inject constructor(
-    dataSourceFactory: WatchlistDataSourceFactory
+    private val dataSourceFactory: WatchlistDataSourceFactory
 ): ViewModel(){
 
     val listDataWatchlist = dataSourceFactory.toLiveData(pageSize = 10)
     val viewStateLoad = Transformations.switchMap(dataSourceFactory.watchlistLiveData, WatchlistDataSource::getViewStates)
+
+    fun refresh(){
+        dataSourceFactory.watchlistLiveData.value?.invalidate()
+    }
 
 }
