@@ -5,6 +5,6 @@ import io.reactivex.Observable
 
 interface RemoteDataSource {
 
-    fun getDataWatchList(): Observable<WatchlistResponse>
+    fun getDataWatchList(page: Int): Observable<WatchlistResponse>
 
 }

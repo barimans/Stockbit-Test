@@ -14,6 +14,7 @@ buildscript {
         hawk_version = "2.0.1"
         multidex_version = "1.0.3"
         navigation_version = "1.0.0"
+        paging_version = "2.1.2"
     }
     repositories {
         google()

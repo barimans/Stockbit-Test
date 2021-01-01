@@ -1,16 +1,15 @@
 package com.brizz.stockbittest.feature.main.watchlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brizz.stockbittest.R
 import com.brizz.stockbittest.base.BaseFragment
 import com.brizz.stockbittest.data.models.DataItem
+import com.brizz.stockbittest.data.models.ViewState
 import com.brizz.stockbittest.feature.main.watchlist.adapter.WatchlistAdapter
 import com.brizz.stockbittest.utils.injectViewModel
 import kotlinx.android.synthetic.main.fragment_watchlist.*
@@ -25,24 +24,23 @@ class WatchlistFragment : BaseFragment<WatchlistViewModel>(), WatchlistContract.
 
     override fun getLayoutResorceId(): Int = R.layout.fragment_watchlist
 
-    private var dataWatchlistAdapter: WatchlistAdapter = WatchlistAdapter(clickListener = { data : DataItem -> watchlistClicked(data)})
+    private var dataWatchlistAdapter: WatchlistAdapter = WatchlistAdapter(clickListener = { data : DataItem? -> watchlistClicked(data)})
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.apply {
-            isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
-                observeLoading(isLoading)
-            })
-            isError.observe(viewLifecycleOwner, Observer { error ->
-                observeError(error)
-            })
             listDataWatchlist.observe(viewLifecycleOwner, Observer { listData ->
                 observeFavoriteUsers(listData)
             })
+            viewStateLoad.observe(viewLifecycleOwner, Observer {
+                when(it){
+                    ViewState.LOADING -> observeShowLoading()
+                    ViewState.LOADED -> observeHideLoading()
+                    else -> observeError(it.msg)
+                }
+            })
         }
-
-        viewModel.getWatchList()
 
         initRecyclerView()
     }
@@ -54,26 +52,21 @@ class WatchlistFragment : BaseFragment<WatchlistViewModel>(), WatchlistContract.
         }
     }
 
-    override fun observeLoading(isLoading: Boolean?) {
-        isLoading?.let {
-            if (it){
-                rvWatchlist.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
-            }else{
-                rvWatchlist.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
-            }
-        }
+    override fun observeFavoriteUsers(watchList: PagedList<DataItem>) {
+        dataWatchlistAdapter.submitList(watchList)
     }
 
-    override fun observeError(error: Throwable?) {
-        error?.let { Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show() }
+    override fun observeShowLoading() {
+        progressBar.visibility = View.VISIBLE
     }
 
-    override fun observeFavoriteUsers(watchList: MutableList<DataItem>) {
-        dataWatchlistAdapter.data = watchList
-        dataWatchlistAdapter.notifyDataSetChanged()
+    override fun observeHideLoading() {
+        progressBar.visibility = View.GONE
     }
 
-    private fun watchlistClicked(data: DataItem) {}
+    override fun observeError(error: String) {
+        Toast.makeText(activity, error, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun watchlistClicked(data: DataItem?) {}
 }

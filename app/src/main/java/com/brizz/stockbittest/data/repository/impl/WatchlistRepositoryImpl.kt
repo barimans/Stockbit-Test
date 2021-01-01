@@ -13,7 +13,7 @@ class WatchlistRepositoryImpl @Inject constructor(
     private val remoteSource: RemoteRepository
 ) : WatchlistRepository{
 
-    override fun getDataWatchList(): Observable<MutableList<DataItem>> {
-        return remoteSource.getDataWatchList().map { it.data }
+    override fun getDataWatchList(page: Int): Observable<MutableList<DataItem>> {
+        return remoteSource.getDataWatchList(page = page).map { it.data }
     }
 }

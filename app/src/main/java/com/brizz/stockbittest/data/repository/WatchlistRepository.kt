@@ -6,5 +6,5 @@ import io.reactivex.Observable
 
 interface WatchlistRepository {
 
-    fun getDataWatchList(): Observable<MutableList<DataItem>>
+    fun getDataWatchList(page: Int): Observable<MutableList<DataItem>>
 }

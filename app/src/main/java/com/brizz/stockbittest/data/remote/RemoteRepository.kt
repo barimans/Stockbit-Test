@@ -19,7 +19,7 @@ class RemoteRepository : RemoteDataSource {
 
     }
 
-    override fun getDataWatchList(): Observable<WatchlistResponse> {
-        return apiService!!.getDataWatchList()
+    override fun getDataWatchList(page: Int): Observable<WatchlistResponse> {
+        return apiService!!.getDataWatchList(page = page)
     }
 }

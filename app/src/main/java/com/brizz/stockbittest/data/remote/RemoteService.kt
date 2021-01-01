@@ -18,6 +18,7 @@ interface RemoteService {
     @GET("data/top/totaltoptiervolfull")
     fun getDataWatchList(
         @Query("limit") limit: Int? = 10,
+        @Query("page") page: Int,
         @Query("tsym") tysm: String? = "USD"
     ): Observable<WatchlistResponse>
 

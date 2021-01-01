@@ -5,7 +5,8 @@ import android.content.Context
 import com.brizz.stockbittest.StockbitApp
 import com.brizz.stockbittest.data.remote.RemoteRepository
 import com.brizz.stockbittest.data.repository.impl.WatchlistRepositoryImpl
-import com.brizz.stockbittest.feature.main.watchlist.WatchlistIntercator
+import com.brizz.stockbittest.feature.main.watchlist.pagination.WatchlistDataSource
+import com.brizz.stockbittest.feature.main.watchlist.pagination.WatchlistDataSourceFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -27,6 +28,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesWatchlistInteractor(repositoryImpl: WatchlistRepositoryImpl) = WatchlistIntercator(repositoryImpl)
+    fun providesWatchlistDataSource(repositoryImpl: WatchlistRepositoryImpl) = WatchlistDataSource(repositoryImpl)
+
+    @Provides
+    @Singleton
+    fun providesWatchlistDataSourceFactory(repositoryImpl: WatchlistRepositoryImpl) = WatchlistDataSourceFactory(repositoryImpl)
 
 }

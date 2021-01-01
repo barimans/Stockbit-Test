@@ -1,23 +1,19 @@
 package com.brizz.stockbittest.feature.main.watchlist
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.brizz.stockbittest.data.models.DataItem
 import io.reactivex.Observable
 
 interface WatchlistContract {
     interface View{
-        fun observeLoading(isLoading: Boolean?)
+        fun observeShowLoading()
 
-        fun observeError(error: Throwable?)
+        fun observeHideLoading()
 
-        fun observeFavoriteUsers(watchList: MutableList<DataItem>)
-    }
+        fun observeError(error: String)
 
-    interface Interactor{
-        fun getWatchList() : Observable<MutableList<DataItem>>
-    }
-
-    interface ViewModel{
-        fun getWatchList()
+        fun observeFavoriteUsers(watchList: PagedList<DataItem>)
     }
 }
